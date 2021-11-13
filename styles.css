@@ -1,0 +1,75 @@
+:root {
+  --text-color: #eadeda;
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  color: var(--text-color);
+}
+
+.quote {
+  font-size: 16px;
+  margin-top: 5rem;
+  margin-left: 5rem;
+  width: 25rem;
+}
+
+.page-container {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: #121113;
+}
+
+.container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  background-image: url(/mountain.jpg);
+  gap: 10rem;
+  height: 40rem;
+  width: 75rem;
+  border-radius: 0.3rem;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.time-container {
+  width: 25rem;
+  height: auto;
+  width: auto;
+  top: 60%;
+  margin-left: 5rem;
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  color: var(--text-color);
+  font-size: 120px;
+  font-weight: 800;
+}
+
+.morning-evening {
+  margin-left: 5.5rem;
+  position: absolute;
+  top: 60%;
+  font-size: 17.5px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.location {
+  position: absolute;
+  top: 77%;
+  margin-left: 17rem;
+  font-size: 18px;
+  text-transform: uppercase;
+}
