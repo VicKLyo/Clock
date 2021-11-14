@@ -1,58 +1,36 @@
- const timeContainer = document.querySelector('.time-container')
-  const quote = document.querySelector('.quote')
+const timeContainer = document.querySelector('.time-container')
+const greeter = document.querySelector('.greeter') 
+const quote = document.querySelector('.quote')
 
-  
+
+async function currentTime(mins, currentQuote) {
+   // get the current date
+   const date = new Date()
+   // store the current minutes so they can be used later to see if the time has changed
+   const min = date.getMinutes()   
+   // if there is no current quote, get one
+   if (currentQuote === undefined) currentQuote = await randomQuote()
+   // when the time has changed, update! The first time this function fires, `mins` is undefined and thus won't equal `min`
+   if (min !== mins) {
+     const greeting = date.getHours() > 11 ? "afternoon" : "morning"
+     // using the `Intl` object, we can get the time format a lot easier!
+     let currentDate = new Intl.DateTimeFormat('en-US',{hour12: false, timeStyle: "short"}).format(date)
+     // using string literals is easier to read than string concatination
+     greeter.textContent = `Good ${greeting}, It's currently`
+     timeContainer.textContent = currentDate
+     quote.textContent = currentQuote
+     // get the next quote ready!
+     currentQuote = await randomQuote()
+   }
+   // loop again, passing the current min and the quote waiting to be used
+   setTimeout(currentTime, 1000, min, currentQuote)
+ }
  
-let currentTime = () =>  {
-    let date = new Date()
-    let h = date.getHours()
-    let m = date.getMinutes()
-    let period = "AM"
-
-    if (h == 0) {
-    h = 12;
-    }
-
-    if (h > 12) {
-    // h = h - 12;
-    period = "PM" 
-    }
-
-    h = (h < 10) ? "0" + h : h;
-    m = (m < 10) ? "0" + m : m;
-
-
-    let time = h + ":" + m;
-
-    
-   
-    
-
-    timeContainer.innerText = time
-    let t = setTimeout(function() {
-        currentTime(), 1000
-    });
-
-    if (period == "AM") {
-        const evening = document.querySelector('.evening');
-        const morning = document.querySelector('.morning');
-        evening.style.display = "none"  
-        
-    } else if (period == "PM") {
-        const evening = document.querySelector('.evening');
-        const morning = document.querySelector('.morning');
-        morning.style.display = "none"  
-    }
-   
-}
-
-currentTime();
-
-    async function randomQuote() {
-    const response = await fetch('https://api.quotable.io/random')
-    const data = await response.json()
-    quote.textContent = ' " ' + data.content + ' " ' + ' - ' + data.author
-    quote = setInterval(randomQuote, 30000)
-}
-    
-randomQuote()
+ async function randomQuote() {
+   const response = await fetch('https://api.quotable.io/random')
+   const data = await response.json()
+   return `"${data.content}" — ${data.author}`
+ }
+ 
+ currentTime()
+ 
